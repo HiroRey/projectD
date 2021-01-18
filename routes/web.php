@@ -15,11 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
+Route::get('/reset', 'App\Http\Controllers\ResetController@index')->name('reset');
+
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/person/orders', 'App\Http\Controllers\Person\OrderController@index')->name('order.index');
+    Route::get('/person/orders/{order}', 'App\Http\Controllers\Person\OrderController@show')->name('order.show');
+
     Route::group(['middleware' => 'isAdmin'], function () {
-        Route::get('/home', "App\Http\Controllers\Admin\HomeController@index")->name('home');
+        Route::get('/order', "App\Http\Controllers\Admin\HomeController@index")->name('home');
+        Route::get('/order/{order}', "App\Http\Controllers\Admin\HomeController@show")->name('order-show');
+        Route::resource('/admin/categories', 'App\Http\Controllers\Admin\CategoryController');
+        Route::resource('/admin/products', 'App\Http\Controllers\Admin\ProductController');
     });
-    Route::resource('/admin/categories', 'App\Http\Controllers\Admin\CategoryController');
+
+
 });
 
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('get-logout');

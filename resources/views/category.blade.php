@@ -1,7 +1,7 @@
 @extends('layouts.welcome')
 
 
-@section('title', 'Категория: ' . $category->name)
+@section('title', 'Категория: ' . @isset($category->name) ? $category->name : '')
 
 
 @section('content')
@@ -16,7 +16,7 @@
         </p>
 
         <div class="row">
-            @foreach($category->products as $product)
+            @foreach($category->products()->with('category')->get() as $product)
                 @include('layouts.card', ['product' => $product])
             @endforeach
         </div>

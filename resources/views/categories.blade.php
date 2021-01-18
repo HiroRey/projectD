@@ -10,7 +10,7 @@
         <div class="">
 
             <a href="{{ route('category', $el->code)}}">
-                <img src="http://internet-shop.tmweb.ru/storage/categories/mobile.jpg">
+                <img src="{{ Storage::url($el->image) }}" width="80" height="80">
                 <h2>{{$el->name}}</h2>
             </a>
             <p>

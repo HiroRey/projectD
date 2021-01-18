@@ -2,15 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsFilterRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Barryvdh\Debugbar\Twig\Extension\Debug;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller
 {
-    public function index()
+    public function index(ProductsFilterRequest $request)
     {
-        $products = Product::all();
+
+        $queryString = Product::with('category');
+        if($request->filled('price_from')) {
+            $queryString->where('price', '>=', $request->price_from);
+        }
+        if($request->filled('price_to')) {
+            $queryString->where('price', '<=', $request->price_to);
+        }
+
+        foreach (['new', 'hit', 'recommend'] as $item) {
+            if($request->has($item)) {
+                $queryString->$item();
+            }
+        }
+
+        $products = $queryString->paginate(9)->withPath("?" . $request->getQueryString());
+
         return view('index', compact('products'));
     }
     public function categories()
@@ -20,7 +39,7 @@ class MainController extends Controller
     }
     public function product($category, $product)
     {
-        $product = Product::where('code', $product)->first();
+        $product = Product::byCode($product)->withTrashed()->first();
 
         return view('product', ['product' => $product, 'category' => $category]);
     }

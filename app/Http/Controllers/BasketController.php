@@ -52,9 +52,11 @@ class BasketController extends Controller
 
     public function basketAdd($productId)
     {
+
        $orderId = session('orderId');
+        $order = Order::create()->id;
        if (is_null($orderId)) {
-           $order = Order::create()->id;
+
            session(['orderId' => $order]);
        } else {
            $order = Order::find($orderId);

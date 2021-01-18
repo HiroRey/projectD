@@ -17,7 +17,7 @@ class Order extends Model
     public function getFullPrice()
     {
         $sum = 0;
-        foreach ($this->products as $product) {
+        foreach ($this->products()->withTrashed()->get() as $product) {
             $sum += $product->getPriceForCount();
         }
         return $sum;
@@ -37,6 +37,11 @@ class Order extends Model
         } else {
             return false;
         }
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
     }
 
 

@@ -30,12 +30,11 @@
                 <ul class="nav navbar-nav">
 
                     <li><a href="{{route('categories.index')}}">Категории</a></li>
-                    <li><a href="">Товары</a>
-                    <li><a href="">Свойства</a>
-                    <li><a href="">Купоны</a>
-                    <li><a href="">Поставщики</a>
-                    </li>
-                    <li><a href="{{ route('home') }}">Заказы</a></li>
+                    <li><a href="{{ route('products.index') }}">Товары</a>
+{{--                    <li><a href="">Свойства</a>--}}
+{{--                    <li><a href="">Купоны</a>--}}
+{{--                    <li><a href="">Поставщики</a></li>--}}
+                    <li><a href="{{route('home')}}">Заказы</a></li>
 
                 </ul>
 
@@ -57,7 +56,6 @@
                                data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false" v-pre>
                                 Администратор @else {{ Auth::user()->name }}
-
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

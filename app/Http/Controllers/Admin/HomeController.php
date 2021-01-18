@@ -25,8 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('status', 1)->get();
+        $orders = Order::active()->get();
 
         return view('home', compact('orders'));
+    }
+
+    public function show(Order $order)
+    {
+        $products = $order->products()->withTrashed()->get();
+
+        return view('auth.orders.show', compact('order', 'products'));
     }
 }

@@ -44,7 +44,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <input type="text" class="form-control" name="name" id="name"
-                               value="@isset($category){{ $category->name }}@endisset">
+                               value="{{ old('name', isset($category) ? $category->name : null) }} ">
                     </div>
                 </div>
 
@@ -68,7 +68,7 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <textarea name="description" id="description" cols="72"
-                                  rows="7">@isset($category){{ $category->description }}@endisset</textarea>
+                                  rows="7">{{ old('name', isset($category) ? $category->description : null) }}</textarea>
                     </div>
                 </div>
                 <br>
@@ -87,14 +87,17 @@
 {{--                </div>--}}
                 <br>
 
-{{--                <div class="input-group row">--}}
-{{--                    <label for="image" class="col-sm-2 col-form-label">Картинка: </label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <label class="btn btn-default btn-file">--}}
-{{--                            Загрузить <input type="file" style="display: none;" name="image" id="image">--}}
-{{--                        </label>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="input-group row">
+                    <label for="image" class="col-sm-2 col-form-label">Картинка: </label>
+                    <div class="col-sm-10">
+                        @error('image')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                        <label class="btn btn-default btn-file">
+                            Загрузить <input type="file" style="display: none;" name="image" id="image">
+                        </label>
+                    </div>
+                </div>
                 <button class="btn btn-success">Сохранить</button>
             </div>
         </form>
