@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
-class IsAdmin
+class SetLocale
 {
     /**
      * Handle an incoming request.
@@ -17,12 +17,8 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
 
-        if ($user->isAdmin() === false) {
-            session()->flash('warning', __('main.isAdmin'));
-            return redirect()->route('index');
-        }
+        App::setLocale(session('lang'));
         return $next($request);
     }
 }

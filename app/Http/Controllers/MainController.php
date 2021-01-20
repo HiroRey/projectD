@@ -7,12 +7,14 @@ use App\Models\Category;
 use App\Models\Product;
 use Barryvdh\Debugbar\Twig\Extension\Debug;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
     {
+
 
         $queryString = Product::with('category');
         if($request->filled('price_from')) {
@@ -49,5 +51,17 @@ class MainController extends Controller
     $obj = Category::where('code', $code)->first();
 
         return view('category', ['category' => $obj]);
+    }
+
+    public function lang($lang)
+    {
+        $availableLocales = ['ru', 'en'];
+        if (!in_array($lang, $availableLocales)) {
+            $locale = config('app.locale');
+        }
+
+        session(['lang' => $lang]);
+        App::setLocale($lang);
+        return redirect()->back();
     }
 }

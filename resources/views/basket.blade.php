@@ -1,6 +1,6 @@
 @extends('layouts.welcome')
 
-@section('title', 'Корзина')
+@section('title', __('basket.cart'))
 
 
 @section('content')
@@ -8,16 +8,16 @@
 
 
 
-        <h1>Корзина</h1>
-        <p>Оформление заказа</p>
+        <h1>@lang('basket.cart')</h1>
+        <p>@lang('basket.ordering')</p>
         <div class="panel">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Название</th>
-                    <th>Кол-во</th>
-                    <th>Цена</th>
-                    <th>Стоимость</th>
+                    <th>@lang('basket.name')</th>
+                    <th>@lang('basket.count')</th>
+                    <th>@lang('basket.price')</th>
+                    <th>@lang('basket.cost')</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                     <td>
                         <a href="{{route('product', [$product->category->code, $product->code])}}">
                             <img height="56px" src="{{Storage::url($product->image)}}">
-                            {{$product->name}}
+                            {{$product->__('name')}}
                         </a>
                     </td>
                     <td><span class="badge">{{$product->pivot->count }}</span>
@@ -47,16 +47,22 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="3">Общая стоимость:</td>
+                    <td colspan="3">@lang('basket.full_cost'):</td>
                     <td>{{ $order->getFullPrice() }} ₽</td>
                 </tr>
                 </tbody>
             </table>
             <br>
            @if (!is_null($order->products) && $order->getFullPrice() !== 0)
-                <div class="btn-group pull-right" role="group">
-                    <a type="button" class="btn btn-success" href="{{route("order")}}">Оформить заказ</a>
+               @guest()
+                    <div class="btn-group pull-right" role="group">
+                        <div class="alert alert-secondary" role="alert">
+                            @lang('basket.place_danger')
+                        </div>
+                @else
+                    <a type="button" class="btn btn-success" href="{{route("order")}}">@lang('basket.place_order')</a>
                 </div>
+                @endguest
            @endif
         </div>
 

@@ -41,9 +41,9 @@ class BasketController extends Controller
        $success = $order->saveOrder($request->name, $request->phone);
 
        if ($success) {
-           session()->flash('success', 'Ваш заказ принят в обработку');
+           session()->flash('success', __('basket.you_order_confirmed'));
        } else {
-           session()->flash('warning', 'В обработке вашего заказа, произошли ошибки, повторите пожалуйста позже.');
+           session()->flash('warning', __('basket.you_cant_order_more'));
        }
 
 
@@ -63,6 +63,7 @@ class BasketController extends Controller
        }
 
 
+
         if ($order->products->contains($productId)) {
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
             $pivotRow->count++;
@@ -76,7 +77,7 @@ class BasketController extends Controller
         }
         $product = Product::find($productId);
 
-        session()->flash('success', 'Добавлен товар ' . $product->name);
+        session()->flash('success',  __('basket.added') . $product->name);
 
         return redirect()->route('basket');
     }
@@ -99,7 +100,7 @@ class BasketController extends Controller
         }
 
         $product = Product::find($productId);
-        session()->flash('warning', 'Удален товар ' . $product->name);
+        session()->flash('warning',  __('basket.removed') . $product->name);
 
         return redirect()->route('basket');
     }

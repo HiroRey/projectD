@@ -7,7 +7,7 @@
 
     <title>Админка: @yield('title')</title>
 
-
+    <!-- Scripts -->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -28,14 +28,11 @@
 
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-
-                    <li><a href="{{route('categories.index')}}">Категории</a></li>
-                    <li><a href="{{ route('products.index') }}">Товары</a>
-{{--                    <li><a href="">Свойства</a>--}}
-{{--                    <li><a href="">Купоны</a>--}}
-{{--                    <li><a href="">Поставщики</a></li>--}}
-                    <li><a href="{{route('home')}}">Заказы</a></li>
-
+                    @admin
+                    <li><a href="{{ route('categories.index') }}">Категории</a></li>
+                    <li><a href="{{ route('products.index') }}">Товары</a></li>
+                    <li><a href="{{ route('home') }}">Заказы</a></li>
+                    @endadmin
                 </ul>
 
                 @guest
@@ -48,31 +45,20 @@
                         </li>
                     </ul>
                 @endguest
-
-                @auth
-                    <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right">
+                @admin
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" v-pre>
-                                Администратор @else {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout')}}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Выйти
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout')}}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
+                        <a href="{{route('home')}}">@lang('main.admin_panel')</a>
                         </li>
+                @else
+                            <li class="nav-item dropdown">
+                                <a href="{{route('order.index')}}">@lang('main.my_orders')</a>
+                            </li>
+               @endadmin
+                            <li class="nav-item dropdown">
+                                <a href="{{route('get-logout')}}">@lang('main.logout')</a>
+                            </li>
                     </ul>
-                @endauth
             </div>
         </div>
     </nav>
