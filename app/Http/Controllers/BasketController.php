@@ -65,7 +65,7 @@ class BasketController extends Controller
        }
 
         if(is_int($order)) {
-
+            session()->flash('warning', __('basket.an_error_occurred_please_try_again'));
             return redirect()->route('index');
         }
 

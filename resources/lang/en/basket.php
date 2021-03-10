@@ -16,6 +16,7 @@ return [
     'approve_order' => 'Approve your order',
     'personal_data' => 'Please, specify your personal data to our manager may contact with you',
 
+    'an_error_occurred_please_try_again' => 'An error occurred, please try again',
     'you_order_confirmed' => 'Your order confirmed!',
     'cart_is_empty' => 'Your Cart is empty!',
     'not_available_more' => ' you can\'t order more',
