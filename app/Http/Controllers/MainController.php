@@ -14,8 +14,6 @@ class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
     {
-
-
         $queryString = Product::with('category');
         if($request->filled('price_from')) {
             $queryString->where('price', '>=', $request->price_from);

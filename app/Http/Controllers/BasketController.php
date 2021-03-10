@@ -53,8 +53,10 @@ class BasketController extends Controller
     public function basketAdd($productId)
     {
 
+
        $orderId = session('orderId');
         $order = Order::create()->id;
+
        if (is_null($orderId)) {
 
            session(['orderId' => $order]);
@@ -62,7 +64,10 @@ class BasketController extends Controller
            $order = Order::find($orderId);
        }
 
+        if(is_int($order)) {
 
+            return redirect()->route('index');
+        }
 
         if ($order->products->contains($productId)) {
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
